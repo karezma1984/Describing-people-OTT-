@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Describing People – Vocabulary, Grammar and Writing</title>
+<style>
+:root{--c1:#0f766e;--c2:#f59e0b;--bg:#fdf8ee;--ink:#1f2937;--ok:#15803d;--bad:#b91c1c}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;padding-top:env(safe-area-inset-top,0px)}
+header{background:linear-gradient(90deg,var(--c1),#115e59);color:#fff;padding:16px;text-align:center}
+header h1{margin:0;font-size:1.3rem}
+header p{margin:3px 0;font-size:.88rem}
+nav{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:10px;background:#fff;border-bottom:3px solid var(--c2);position:sticky;top:0;z-index:5}
+button,.btn{background:var(--c1);color:#fff;border:0;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:.9rem;margin:3px}
+button.alt,.btn.alt{background:var(--c2);color:#222}
+nav button.on{background:var(--c2);color:#222}
+main{max-width:900px;margin:auto;padding:14px}
+section.pg{display:none;background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 8px #0001}
+section.pg.on{display:block}
+.card{border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin:10px 0}
+.q{font-weight:600;margin-top:6px}
+.opt{display:block;margin:4px 0;padding:7px 9px;border:1px solid #d1d5db;border-radius:8px;cursor:pointer}
+.opt input{margin-right:6px}
+.fb{font-size:.9rem;margin-top:4px}
+.good{color:var(--ok);font-weight:600}.wrong{color:var(--bad);font-weight:600}
+input[type=text],input[type=number],textarea,select{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:8px;font-size:1rem;margin:3px 0}
+textarea{min-height:90px}
+.bar{height:14px;background:#e5e7eb;border-radius:8px;overflow:hidden}
+.bar div{height:100%;background:var(--c1);width:0;transition:width .4s}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.tile{background:#ecfdf5;border-radius:10px;padding:10px;border-left:5px solid var(--c1)}
+.tile b{display:block;font-size:1.05rem}
+.flag{background:linear-gradient(90deg,#fff 33%,#c8102e 33%,#c8102e 66%,#fff 66%);height:6px;border-radius:4px;margin:6px 0}
+.cert{text-align:center;border:4px double var(--c2);padding:18px;border-radius:12px;background:#fffbeb}
+.small{font-size:.8rem;color:#555}
+@media print{nav,header,.noprint{display:none!important}section.pg{display:block!important;box-shadow:none}#printArea{display:block!important}}
+#printArea{display:none;white-space:pre-wrap;font-size:14pt;padding:20px}
+.spk{background:#fff;color:#111;border:1px solid #cbd5e1;padding:2px 7px;margin-left:4px;font-size:.9rem}
+.hl{background:#fde68a;border-radius:6px}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;border-bottom:1px solid #eee;padding:6px 0}
+.row .w{font-weight:600;min-width:150px;cursor:pointer}
+.row .syl{flex:1;color:#555;font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Describing People – Vocabulary, Grammar and Writing</h1>
+  <p>Imam Al-Salt bin Al-Qasim Al-Kharousi Basic Education School (Grades 5–8) · South Al Sharqiyah, Sultanate of Oman</p>
+  <p>Academic Year 2026–2027 · English Language · Grade 5 · Team Together Oman 5A</p>
+  <p>Teacher: Salim Rashid AL Harbi</p>
+  <div class="flag"></div>
+</header>
+<nav id="nav"></nav>
+
+<main>
+
+<!-- DASHBOARD -->
+<section class="pg on" id="p-d">
+  <h2>Dashboard</h2>
+  <p><label>Student name (optional): <input type="text" id="sn" maxlength="40" onchange="S.name=this.value;save();dash()"></label></p>
+  <p class="small">Learning objectives: recognise personality adjectives; describe appearance; use have got / has got; describe hobbies and abilities; use Present Simple and Present Continuous; compare people; connect ideas; write a 6–8 sentence paragraph about someone important.</p>
+  <div class="grid">
+    <div class="tile"><b>Completed activities</b><span id="st"></span></div>
+    <div class="tile"><b>Total score</b><span id="sc"></span></div>
+  </div>
+  <p>Progress</p><div class="bar"><div id="pb"></div></div>
+  <div class="grid" style="margin-top:10px">
+    <div class="tile"><b>Grammar performance</b><span id="gr"></span></div>
+    <div class="tile"><b>Vocabulary performance</b><span id="vo"></span></div>
+    <div class="tile"><b>Writing task status</b><span id="wr"></span></div>
+  </div>
+  <p>
+    <button onclick="resume()">Resume learning</button>
+    <button class="alt" onclick="mistakes()">Review mistakes</button>
+    <button class="alt" onclick="restart()">Restart activities</button>
+  </p>
+  <div id="mi"></div>
+  <h3>Reading progress</h3>
+  <p class="small">Self-marked records only; no speech scoring is used.</p>
+  <div id="rp"></div>
+  <p class="small">Progress is saved only on this device and browser. Scores are practice results; they are not official grades.</p>
+</section>
+
+<!-- VOCABULARY -->
+<section class="pg" id="p-vocab">
+  <h2>1. Vocabulary</h2>
+  <p>Personality adjectives (simple meanings):</p>
+  <div class="grid" id="vcards"></div>
+  <p>Action expressions:</p>
+  <div class="grid">
+    <div class="tile"><b>count</b>say numbers in order</div>
+    <div class="tile"><b>spell</b>say each letter of a word</div>
+    <div class="tile"><b>do experiments</b>test ideas in science</div>
+    <div class="tile"><b>bake a cake</b>cook a cake in an oven</div>
+    <div class="tile"><b>throw a ball</b>send a ball through the air</div>
+    <div class="tile"><b>fix toys</b>repair broken toys</div>
+    <div class="tile"><b>juggle</b>keep several objects in the air</div>
+    <div class="tile"><b>make a pizza</b>prepare a pizza</div>
+  </div>
+  <p class="small">Note: shy and confident describe different ways people feel or behave; they are contrasting descriptions, not exact dictionary opposites.</p>
+  <button class="alt" onclick="hint('vocab')">Hint</button>
+  <div id="qz-vocab"></div>
+  <p><button class="alt" onclick="retry('vocab')">Retry this module</button></p>
+</section>
+
+<!-- DESCRIBING -->
+<section class="pg" id="p-desc">
+  <h2>2. Describing People</h2>
+  <p class="small">Example: This is my brother. His name is Ali. He is eleven years old. He has got short, dark hair. He is friendly and hard-working.</p>
+  <div class="card">
+    <h3>Guided description builder</h3>
+    <label>Relationship: <select id="dr"><option>brother</option><option>sister</option><option>mother</option><option>father</option><option>friend</option></select></label>
+    <label>Name: <input type="text" id="dn" value="Ali"></label>
+    <label>Age (5–12): <input type="number" id="da" min="5" max="12" value="11"></label>
+    <label>Gender: <select id="dg"><option value="m">male (he)</option><option value="f">female (she)</option></select></label>
+    <label>Hair: <select id="dh"><option>short, dark</option><option>long, curly</option><option>long, straight</option><option>short, fair</option></select></label>
+    <label>Personality 1: <select id="dp1"><option>friendly</option><option>kind</option><option>polite</option><option>tidy</option><option>confident</option><option>shy</option><option>hard-working</option></select></label>
+    <label>Personality 2: <select id="dp2"><option>hard-working</option><option>polite</option><option>kind</option><option>friendly</option><option>tidy</option><option>confident</option><option>shy</option></select></label>
+    <label>Hobby: <select id="dhob"><option>playing football</option><option>baking cakes</option><option>fixing toys</option><option>doing experiments</option><option>making pizzas</option></select></label>
+    <label>Ability: <select id="dab"><option>spelling difficult words</option><option>counting quickly</option><option>throwing a ball</option><option>juggling</option></select></label>
+    <p><button onclick="genDesc()">Generate sentences</button></p>
+    <textarea id="dout" placeholder="Your sentences appear here. You can edit them."></textarea>
+  </div>
+  <button class="alt" onclick="hint('desc')">Hint</button>
+  <div id="qz-desc"></div>
+  <p><button class="alt" onclick="retry('desc')">Retry this module</button></p>
+</section>
+
+<!-- HOBBIES -->
+<section class="pg" id="p-hob">
+  <h2>3. Hobbies and Interests</h2>
+  <p class="small">I/You/We/They + like/enjoy + verb-ing · He/She/It + likes/enjoys + verb-ing · Negative: don't / doesn't + like + verb-ing.</p>
+  <div class="card">
+    <label>Subject: <select id="hs"><option>I</option><option>You</option><option>We</option><option>They</option><option>He</option><option>She</option></select></label>
+    <label>Activity: <select id="ha"><option>play football</option><option>bake cakes</option><option>fix toys</option><option>juggle</option><option>do experiments</option><option>make pizzas</option><option>count</option><option>spell</option><option>throw a ball</option></select></label>
+    <label>Other hobby (base form, e.g. paint pictures): <input type="text" id="hc"></label>
+    <label><input type="checkbox" id="hn"> Negative (don't / doesn't like)</label>
+    <p><button onclick="genHob()">Generate sentence</button></p>
+    <textarea id="hout" placeholder="Your sentence appears here. You can edit it."></textarea>
+  </div>
+  <button class="alt" onclick="hint('hob')">Hint</button>
+  <div id="qz-hob"></div>
+  <p><button class="alt" onclick="retry('hob')">Retry this module</button></p>
+</section>
+
+<!-- GOOD AT -->
+<section class="pg" id="p-good">
+  <h2>4. Good at, Great at and Terrible at</h2>
+  <p>These expressions describe someone's skill or ability in an activity. Use am/is/are, then good/great/terrible at, then a noun or verb-ing.</p>
+  <p class="small">Terrible at means the person currently finds it difficult. It does not mean they cannot improve.</p>
+  <button class="alt" onclick="hint('good')">Hint</button>
+  <div id="qz-good"></div>
+  <p><button class="alt" onclick="retry('good')">Retry this module</button></p>
+</section>
+
+<!-- TENSES -->
+<section class="pg" id="p-tense">
+  <h2>5–7. Present Simple and Present Continuous</h2>
+  <div class="card">
+    <p><b>Present Simple</b> (habits, routines, likes, general facts): I/You/We/They play; He/She/It plays. Negative: doesn't + base verb (she doesn't like, not doesn't likes). Questions: Do/Does + base verb.</p>
+    <p><b>Present Continuous</b> (now, at the moment): am/is/are + verb-ing. Negative: am not / isn't / aren't.</p>
+    <p><b>Third-person -s / -es / -ies:</b> play → plays; watch → watches; study → studies (consonant + y → -ies); have → has.</p>
+    <p><b>-ing spelling:</b> play → playing; make → making (drop e); bake → baking; run → running (double the consonant); sit → sitting; lie → lying (ie → ying).</p>
+    <p><b>Time words:</b> Simple: every day, usually, often, sometimes, never. Continuous: now, right now, at the moment, Look!, Listen! Time words are clues; the whole sentence decides.</p>
+  </div>
+  <button class="alt" onclick="hint('tense')">Hint</button>
+  <div id="qz-tense"></div>
+  <p><button class="alt" onclick="retry('tense')">Retry this module</button></p>
+</section>
+
+<!-- COMPARISONS -->
+<section class="pg" id="p-comp">
+  <h2>8. Comparative and Superlative Adjectives</h2>
+  <div class="card">
+    <p>Short adjectives: tall → taller → the tallest; small → smaller → the smallest; kind → kinder → the kindest.</p>
+    <p>Spelling: nice → nicer → the nicest; big → bigger → the biggest; happy → happier → the happiest.</p>
+    <p>Long adjectives: confident → more confident → the most confident; difficult → more difficult → the most difficult. Friendly → friendlier → the friendliest.</p>
+    <p>Irregular: good → better → the best; bad → worse → the worst. Never use double forms (not "more taller", not "the most tallest").</p>
+  </div>
+  <button class="alt" onclick="hint('comp')">Hint</button>
+  <div id="qz-comp"></div>
+  <p><button class="alt" onclick="retry('comp')">Retry this module</button></p>
+</section>
+
+<!-- CONNECTORS -->
+<section class="pg" id="p-conn">
+  <h2>9. Connecting Words</h2>
+  <p>and = add · or = choice · but = contrast · so = result · because = reason.</p>
+  <button class="alt" onclick="hint('conn')">Hint</button>
+  <div id="qz-conn"></div>
+  <p><button class="alt" onclick="retry('conn')">Retry this module</button></p>
+</section>
+
+<!-- READ, LISTEN AND REPEAT -->
+<section class="pg" id="p-read">
+  <h2>Read, Listen and Repeat</h2>
+  <p class="small">Tap a word, a sentence or a speaker button to hear it in English (UK) voice when your device has one. If you hear no sound, check the volume and, on iPhone or iPad, the silent switch. Tick "I said it" or "I read it aloud" only after you have said it yourself: the tick is your own record, not a speech check. You can listen and practise as many times as you like.</p>
+  <h3>Level 1 – Word recognition and pronunciation</h3>
+  <p class="small">Syllables use a standard dictionary-style split and were checked by hand; please confirm them with a dictionary or your teacher.</p>
+  <div id="rd1"></div>
+  <h3>Level 2 – Sentence reading and repetition</h3>
+  <div id="rd2"></div>
+  <h3>Level 3 – Fiction passage and comprehension</h3>
+  <div class="card">
+    <b>The Football Surprise</b>
+    <p><button onclick="playStory()">▶ Play whole story</button> <button class="alt" onclick="stopAudio()">■ Stop</button></p>
+    <div id="rd3s"></div>
+    <p class="small">The sentence being read is highlighted. Word-by-word highlighting is not used because it is not reliable across iPhone, iPad and computer browsers.</p>
+  </div>
+  <div id="rd3q"></div>
+  <div id="rdmsg" class="card" style="display:none"></div>
+</section>
+
+<!-- WRITING -->
+<section class="pg" id="p-write">
+  <h2>10. Writing Workshop: Someone Important in My Life</h2>
+  <h3>Step 1 – Plan</h3>
+  <div class="card">
+    <label>Person: <select id="wr_r"><option>brother</option><option>sister</option><option>mother</option><option>father</option><option>friend</option><option>another family member</option></select></label>
+    <label>Name: <input type="text" id="wn"></label>
+    <label>Age: <input type="number" id="wa" min="5" max="12"></label>
+    <label>Gender: <select id="wg"><option value="m">he</option><option value="f">she</option></select></label>
+    <label>Hair: <select id="wh"><option>short, dark</option><option>long, curly</option><option>long, straight</option><option>short, fair</option></select></label>
+    <label>Personality 1: <select id="wp1"><option>friendly</option><option>kind</option><option>polite</option><option>tidy</option><option>hard-working</option><option>confident</option><option>shy</option></select></label>
+    <label>Personality 2: <select id="wp2"><option>kind</option><option>friendly</option><option>polite</option><option>tidy</option><option>hard-working</option><option>confident</option><option>shy</option></select></label>
+    <label>Hobby (verb-ing): <input type="text" id="wh2" placeholder="e.g. playing football"></label>
+    <label>Ability (verb-ing or noun): <input type="text" id="wab" placeholder="e.g. spelling difficult words"></label>
+    <label>Why I love this person (e.g. he is kind and helpful): <input type="text" id="wrs"></label>
+  </div>
+  <h3>Step 2 – Build sentences and Step 4 – Paragraph (6–8 sentences, editable)</h3>
+  <p><button onclick="genPara()">Generate paragraph</button></p>
+  <textarea id="para" oninput="S.para=this.value;save();dash()" placeholder="Your paragraph appears here. Edit it freely."></textarea>
+  <h3>Step 3 – Improve</h3>
+  <p class="small">Add a comparative or superlative, a hobby sentence, an ability sentence, connecting words, and correct punctuation.</p>
+  <p><button class="alt" onclick="chk()">Check my writing (objective checks)</button> <button class="alt" onclick="window.print()">Print</button></p>
+  <div id="chk" class="card"></div>
+  <details class="card"><summary><b>Step 5 – Model paragraph</b></summary>
+    <p class="small">Original teaching example written for this application. It is not an official quotation from the textbook.</p>
+    <p>My brother's name is Ali. He is eleven years old. He has got short, dark hair. He is friendly and hard-working. He likes playing football and doing experiments. He is good at spelling difficult words, but he is terrible at juggling. I love him because he is kind and helpful.</p>
+  </details>
+  <details class="card"><summary><b>Step 6 – Self-assessment checklist</b></summary>
+    <p><label><input type="checkbox"> I wrote about someone important to me.</label><br>
+    <label><input type="checkbox"> I included the person's name and age.</label><br>
+    <label><input type="checkbox"> I described the person's appearance.</label><br>
+    <label><input type="checkbox"> I used personality adjectives.</label><br>
+    <label><input type="checkbox"> I mentioned a hobby.</label><br>
+    <label><input type="checkbox"> I described an ability.</label><br>
+    <label><input type="checkbox"> I used correct grammar.</label><br>
+    <label><input type="checkbox"> I organised my sentences logically.</label><br>
+    <label><input type="checkbox"> I used capital letters and punctuation.</label></p>
+  </details>
+  <details class="card"><summary><b>Step 7 – Rubric (10 marks)</b></summary>
+    <p>Content and relevant details: 3 · Vocabulary: 2 · Grammar: 2 · Organisation and connecting words: 2 · Capitalisation and punctuation: 1.</p>
+    <p class="small">The checks above are objective only. Content, vocabulary and organisation judgements are subjective and must be confirmed by the teacher. Automated feedback is not an official Ministry of Education grade.</p>
+  </details>
+</section>
+
+<!-- FINAL -->
+<section class="pg" id="p-final">
+  <h2>Final Assessment</h2>
+  <p>This test uses every graded question from Modules 1–9 (the same bank), so it covers all modules. Answer every question, then view your result.</p>
+  <p><button onclick="showFinal()">Start / continue final test</button> <button class="alt" onclick="finalRes()">View result</button> <button class="alt" onclick="resetFinal()">Retry final test</button></p>
+  <div id="qz-final"></div>
+  <div id="fr"></div>
+  <div id="cert"></div>
+</section>
+
+<!-- TEACHER -->
+<section class="pg" id="p-teacher">
+  <h2>Teacher Dashboard</h2>
+  <p>Teacher: Salim Rashid AL Harbi · Imam Al-Salt bin Al-Qasim Al-Kharousi Basic Education School · Academic Year 2026–2027 · Team Together Oman 5A</p>
+  <p class="small">This dashboard shows only results saved on this device and browser. Results are not shared across devices or students.</p>
+  <div id="tc"></div>
+  <p><button onclick="exportJ()">Export results (JSON)</button> <button class="alt" onclick="window.print()">Print</button></p>
+  <h3>Common mistakes on this device</h3>
+  <div id="cm"></div>
+</section>
+
+</main>
+<div id="printArea"></div>
+
+<script>
+const MODS={
+vocab:['Vocabulary','Find the word that matches the picture meaning. Opposites often share a pattern: un- (untidy), or a different word (mean ↔ kind).'],
+desc:['Describing People','Remember: He/She has got; He/She is; the verb is after the subject. Use and to add, but for contrast.'],
+hob:['Hobbies','He/She/It + likes / doesn\'t like. I/You/We/They + like / don\'t like. After like, use verb-ing.'],
+good:['Good at / Great at / Terrible at','Use am/is/are before the expression and at after it. Then use a noun or a verb-ing form.'],
+tense:['Present Simple & Continuous','Simple = habits and routines. Continuous = now and at the moment. Check the whole sentence, not just one time word.'],
+comp:['Comparatives & Superlatives','Comparative = two people (-er, than). Superlative = a group (the + -est). Good → better → the best. Bad → worse → the worst.'],
+conn:['Connecting Words','and = add, or = choice, but = contrast, so = result, because = reason. More than one connector can be correct.']
+};
+const PG={d:'Dashboard',vocab:'1 Vocabulary',desc:'2 Describing',hob:'3 Hobbies',good:'4 Good at',tense:'5–7 Tenses',comp:'8 Comparisons',conn:'9 Connectors',read:'Read, Listen & Repeat',write:'10 Writing',final:'Final Test',teacher:'Teacher'};
+
+// Question bank: [module, type m=multiple choice / t=typed, question, options, answer index (m) or text (t), explanation]
+const BANK=[
+['vocab','m','A person who is always helpful and smiles at others is ___.',['mean','friendly','lazy','rude'],1,'Friendly means kind and easy to talk to.'],
+['vocab','m','Someone who feels nervous talking to new people is ___.',['confident','shy','tidy','polite'],1,'Shy describes feeling nervous with other people.'],
+['vocab','m','The opposite of kind is ___.',['polite','mean','tidy','lazy'],1,'Kind and mean are opposites.'],
+['vocab','m','The opposite of tidy is ___.',['untidy','shy','rude','friendly'],0,'Untidy means messy.'],
+['vocab','m','The opposite of lazy is ___.',['hard-working','polite','untidy','shy'],0,'Hard-working means works a lot and tries hard.'],
+['vocab','m','The opposite of polite is ___.',['kind','confident','rude','tidy'],2,'Rude means not polite.'],
+['vocab','m','Which verb means to say each letter of a word in order?',['count','spell','juggle','bake'],1,'To spell is to say the letters of a word.'],
+['vocab','m','Which action happens in an oven?',['throw a ball','bake a cake','fix toys','count'],1,'We bake a cake in an oven.'],
+['vocab','m','Which activity means keeping several balls in the air?',['juggle','spell','count','make a pizza'],0,'To juggle is to keep several objects moving in the air.'],
+['vocab','m','Which word is the opposite of unfriendly?',['friendly','rude','mean','lazy'],0,'Friendly and unfriendly are opposites.'],
+['vocab','t','The opposite of "curly" hair is ___ hair.','straight','Straight hair does not curl.'],
+['vocab','t','Write the -ing form of "make".','making','Make drops the e: making.'],
+['desc','m','He ___ got short, dark hair.',['has','have','is','are'],0,'Use has got with he, she and it.'],
+['desc','m','She ___ eleven years old.',['has','is','have','do'],1,'Use is with age: She is eleven years old.'],
+['desc','m','Which word describes hair that does not curl?',['straight','tall','shy','polite'],0,'Straight hair is not curly.'],
+['desc','m','Choose the correct sentence.',['My brother are tall.','My brother is tall.','My brother has tall.','My brother tall is.'],1,'My brother is tall. Use is with he.'],
+['hob','m','She ___ baking cakes.',['like','likes','liking','is like'],1,'She + likes + verb-ing.'],
+['hob','m','I don\'t like ___.',['juggle','juggling','juggles','jugglied'],1,'After like, use verb-ing.'],
+['hob','m','He ___ fixing toys.',['enjoy','enjoys','enjoying','enjoyed'],1,'He + enjoys + verb-ing.'],
+['hob','m','They ___ making pizzas.',['enjoys','enjoy','enjoying','enjoyed'],1,'They + enjoy + verb-ing.'],
+['hob','m','She doesn\'t ___ doing experiments.',['likes','liking','like','liked'],2,'After doesn\'t, use the base verb: like.'],
+['hob','m','Which sentence is correct?',['He doesn\'t likes juggling.','He doesn\'t like juggling.','He don\'t like juggling.','He not like juggling.'],1,'After doesn\'t, the verb is in base form: like.'],
+['good','m','I am good ___ spelling.',['in','at','on','for'],1,'Good at, great at, terrible at.'],
+['good','m','She is great ___ baking cakes.',['at','in','to','with'],0,'Great at is followed by at.'],
+['good','m','He is terrible at ___.',['juggle','juggling','juggles','juggled'],1,'After at, use a noun or verb-ing.'],
+['good','m','Ali ___ good at counting quickly.',['am','is','are','be'],1,'Ali is (one person).'],
+['good','m','Sara and Noor ___ great at singing.',['is','am','are','be'],2,'Two people take are.'],
+['good','m','I ___ terrible at fixing toys.',['am','is','are','be'],0,'I am.'],
+['good','m','Which sentence is correct?',['She is good at spell.','She is good at spelling.','She good at spelling.','She is good spelling.'],1,'Good at + verb-ing: good at spelling.'],
+['good','m','Being terrible at something means ...',['you can never improve.','you find it very difficult right now.','you are famous for it.','you like it very much.'],1,'Terrible at describes current difficulty, not a fixed limit.'],
+['good','m','Sara is great at ___ experiments.',['doing','does','do','done'],0,'At + verb-ing: doing.'],
+['good','m','Which sentence is correct?',['She is terrible at fixing toys.','She is terrible fixing at toys.','She terrible is at fixing toys.','She is terrible at to fix toys.'],0,'Subject + is + terrible at + verb-ing.'],
+['tense','m','I ___ football every Friday.',['play','am playing','playing','plays'],0,'Habit: Present Simple. I play.'],
+['tense','m','Look! She ___ a cake now.',['bakes','is baking','bake','baked'],1,'Look! and now signal Present Continuous.'],
+['tense','m','He usually ___ pizza on Sundays.',['makes','is making','make','making'],0,'Usually signals Present Simple.'],
+['tense','m','Listen! They ___ the piano.',['play','are playing','plays','playing'],1,'Listen! signals Present Continuous. They are playing.'],
+['tense','m','We ___ in the garden right now.',['play','plays','are playing','playing'],2,'Right now signals Present Continuous.'],
+['tense','m','Which is the correct negative of "He plays football."?',['He doesn\'t plays football.','He doesn\'t play football.','He isn\'t play football.','He not play football.'],1,'Simple negative: doesn\'t + base verb.'],
+['tense','m','Does Ali ___ football?',['play','plays','playing','is play'],0,'Question: Does + he/she/it + base verb.'],
+['tense','m','Is he ___ an experiment right now?',['do','does','doing','done'],2,'Continuous: is + verb-ing.'],
+['tense','m','Ali ___ the toy at the moment.',['fixes','is fixing','fix','fixing'],1,'At the moment signals Present Continuous.'],
+['tense','m','Dad ___ dinner now.',['cooks','is cooking','cook','cooked'],1,'Now signals Present Continuous.'],
+['tense','m','Do you ___ baking cakes?',['like','likes','liking','is like'],0,'Question: Do + you + base verb.'],
+['tense','m','Which time expression goes with Present Continuous?',['every day','usually','at the moment','never'],2,'At the moment signals Present Continuous.'],
+['tense','m','Which time expression goes with Present Simple?',['right now','Look!','every day','Listen!'],2,'Every day signals Present Simple.'],
+['tense','m','Are they doing an experiment? No, ___.',['they aren\'t','they don\'t','they isn\'t','they doesn\'t'],0,'Short answer: No, they aren\'t.'],
+['tense','t','Write the -ing form of "run".','running','Double the n before -ing.'],
+['tense','t','Write the -ing form of "lie".','lying','ie becomes y before -ing.'],
+['tense','t','Write the he/she form of "study".','studies','Consonant + y becomes -ies.'],
+['tense','m','He ___ TV every evening.',['watches','watching','watch','is watch'],0,'Habit with he: watches (-es after ch).'],
+['tense','m','Right now, they ___ football.',['play','plays','are playing','is playing'],2,'Right now signals Present Continuous. They are playing.'],
+['tense','m','I ___ the table now.',['clean','am cleaning','cleans','cleaned'],1,'Now signals Present Continuous: I am cleaning.'],
+['comp','m','Ali is ___ than Ahmed.',['taller','tallest','more tall','the tallest'],0,'Two people: comparative with than.'],
+['comp','m','Sara is the ___ singer in the group.',['best','better','good','gooder'],0,'Good → better → the best.'],
+['comp','m','This drawing is ___ than that drawing.',['worse','worst','bad','badder'],0,'Bad → worse → the worst.'],
+['comp','m','This is the ___ drawing in the competition.',['worst','worse','bad','badest'],0,'Bad → worse → the worst.'],
+['comp','m','Ali is ___ at football than Sami.',['better','best','good','gooder'],0,'Good → better (comparison).'],
+['comp','m','Nasser is ___ than his brother.',['more confident','confidenter','most confident','confident more'],0,'Long adjectives use more.'],
+['comp','m','Choose the correct comparative of "friendly".',['friendlier','more friendlier','friendlyer','friendliest'],0,'Friendly → friendlier.'],
+['comp','m','Choose the correct superlative of "happy".',['happyest','the happiest','the most happy','the most happyest'],1,'Happy → happier → the happiest.'],
+['comp','m','Choose the correct superlative of "nice".',['the nicest','the nicer','the niciest','the most nicest'],0,'Nice → nicer → the nicest.'],
+['comp','m','Which is correct?',['more taller','taller','the most tallest','the tallest'],1,'Use taller only; never double the form.'],
+['conn','m','Amira is kind ___ friendly.',['and','or','but','so'],0,'Add two positive adjectives: and.'],
+['conn','m','Would you like tea ___ juice?',['and','or','but','because'],1,'A choice: or.'],
+['conn','m','He is shy, ___ he is friendly.',['but','and','or','so'],0,'Contrast: but.'],
+['conn','m','I was hungry, ___ I ate a sandwich.',['so','because','but','or'],0,'Result: so.'],
+['conn','m','She is happy ___ she has won a prize.',['so','because','but','or'],1,'Reason: because.'],
+['conn','m','I like him ___ he is kind.',['but','so','because','and'],2,'Reason: because.']
+];
+
+const $=id=>document.getElementById(id);
+let S={name:'',res:{},para:'',wstat:''};
+try{S=Object.assign(S,JSON.parse(localStorage.getItem('dpeo5a')||'{}'))}catch(e){}
+function save(){try{localStorage.setItem('dpeo5a',JSON.stringify(S))}catch(e){}}
+const idx=m=>BANK.map((b,i)=>i).filter(i=>m==='*'||BANK[i][0]===m);
+
+function go(p){document.querySelectorAll('section.pg').forEach(s=>s.classList.toggle('on',s.id==='p-'+p));
+document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
+if(p==='d')dash();if(p==='teacher')teach();if(p==='read')rdRender();window.scrollTo(0,0)}
+
+function initNav(){$('nav').innerHTML=Object.keys(PG).map(p=>`<button data-p="${p}" onclick="go('${p}')">${PG[p]}</button>`).join('')}
+
+function vcards(){const v=[['shy','feels nervous with other people'],['confident','sure of yourself'],['lazy','does not like to work or move'],['hard-working','works hard and tries a lot'],['friendly','kind and easy to talk to'],['unfriendly','not nice to others'],['kind','helpful and caring'],['mean','unkind to others'],['polite','uses good manners'],['rude','not polite'],['tidy','neat, things in order'],['untidy','messy']];
+$('vcards').innerHTML=v.map(x=>`<div class="tile"><b>${x[0]}</b>${x[1]}</div>`).join('')}
+
+function quiz(m){const list=idx(m);
+return list.map(i=>{const b=BANK[i];const body=b[1]==='m'
+?b[3].map((x,k)=>`<label class="opt"><input type="radio" name="q${i}" onchange="ans(${i},${k})">${x}</label>`).join('')
+:`<input type="text" id="t${i}" placeholder="Type your answer"><button class="alt" onclick="ans(${i},$('t${i}').value)">Check</button>`;
+const prev=S.res[i]==null?'':(S.res[i]?'<span class="good">✔ Saved: correct.</span>':'<span class="wrong">✘ Saved: not correct yet. Try again.</span>');
+return `<div class="card"><div class="q">${i+1}. ${b[2]}</div>${body}<div class="fb" id="f${i}">${prev}</div></div>`}).join('')}
+
+function renderAll(){['vocab','desc','hob','good','tense','comp','conn'].forEach(m=>{$('qz-'+m).innerHTML=quiz(m)});}
+
+function ans(i,v){const b=BANK[i];const ok=b[1]==='m'?v===b[4]:String(v).trim().toLowerCase()===b[4];
+S.res[i]=ok?1:0;save();
+const shown=b[1]==='m'?b[3][b[4]]:b[4];
+$('f'+i).innerHTML=(ok?'<span class="good">✔ Correct.</span> ':'<span class="wrong">✘ Not quite.</span> Answer: <b>'+shown+'</b>. ')+b[5];
+dash()}
+
+function hint(m){alert(MODS[m][1])}
+function retry(m){idx(m).forEach(i=>delete S.res[i]);save();renderAll();dash()}
+function resetFinal(){idx('*').forEach(i=>delete S.res[i]);save();showFinal();$('fr').innerHTML='';$('cert').innerHTML='';dash()}
+
+function grp(ms){const ix=BANK.map((b,i)=>i).filter(i=>ms.includes(BANK[i][0]));
+const a=ix.filter(i=>S.res[i]!=null).length,c=ix.filter(i=>S.res[i]===1).length;
+return `${a?Math.round(c/ix.length*100):0}% of questions correct (${a}/${ix.length} answered)`}
+
+function dash(){const n=BANK.length;const ok=idx('*').filter(i=>S.res[i]===1).length;
+const answered=idx('*').filter(i=>S.res[i]!=null).length;
+const mods=Object.keys(MODS);const done=mods.filter(m=>idx(m).every(i=>S.res[i]!=null)).length;
+$('st').textContent=`${done} of ${mods.length} modules completed`;
+$('sc').textContent=`${ok} / ${n} (${Math.round(ok/n*100)}%)`;
+$('pb').style.width=Math.round(answered/n*100)+'%';
+$('gr').textContent=grp(['tense','hob','good','comp','conn','desc']);
+$('vo').textContent=grp(['vocab']);
+$('wr').textContent=S.wstat==='Checked'?'Draft checked (teacher confirms marks)':(S.para?'Draft saved':'Not started');
+if($('sn').value!==S.name)$('sn').value=S.name;rpDash()}
+
+function resume(){const m=Object.keys(MODS).find(m=>idx(m).some(i=>S.res[i]==null));go(m||'final')}
+function mistakes(){const w=idx('*').filter(i=>S.res[i]===0);
+$('mi').innerHTML=w.length?'<div class="card"><b>Questions to review:</b>'+w.map(i=>`<p class="fb">${i+1}. ${BANK[i][2]}<br><span class="small">${BANK[i][5]}</span></p>`).join('')+'</div>':'<p>No mistakes saved yet. Answer some questions first.</p>'}
+function restart(){if(!confirm('Reset all saved answers on this device?'))return;S={name:S.name,res:{},para:'',wstat:''};save();renderAll();$('para').value='';$('mi').innerHTML='';dash()}
+
+function ing(v){if(/ie$/.test(v))return v.slice(0,-2)+'ying';
+if(/[^aeiou]e$/.test(v)&&!/ee$/.test(v))return v.slice(0,-1)+'ing';
+if(/^[^aeiou]*[aeiou][^aeiouwxy]$/.test(v)&&v.length<=4)return v+v.slice(-1)+'ing';
+return v+'ing'}
+function ingPhrase(p){const w=p.trim().split(' ');return [ing(w[0]),...w.slice(1)].join(' ')}
+
+const W={5:'five',6:'six',7:'seven',8:'eight',9:'nine',10:'ten',11:'eleven',12:'twelve'};
+function genDesc(){const v=id=>$(id).value;const P=v('dg')==='f'?'She':'He';const poss=P==='He'?'His':'Her';
+const age=parseInt(v('da'))||11;
+const s=[`This is my ${v('dr')}.`,`${poss} name is ${v('dn')||'Ali'}.`,`${P} is ${W[age]||age} years old.`,`${P} has got ${v('dh')} hair.`,`${P} is ${v('dp1')} and ${v('dp2')}.`,`${P} likes ${v('dhob')}.`,`${P} is good at ${v('dab')}.`];
+$('dout').value=s.join(' ')}
+
+function genHob(){const sub=$('hs').value;const pl=['I','You','We','They'].includes(sub);
+const act=$('hc').value.trim()?ingPhrase($('hc').value):ingPhrase($('ha').value);
+const neg=$('hn').checked;
+const verb=neg?(pl?"don't like":"doesn't like"):(pl?'like':'likes');
+$('hout').value=`${sub} ${verb} ${act}.`}
+
+const ALLMSG=[];
+function genPara(){const v=id=>$(id).value;const P=v('wg')==='f'?'She':'He';const obj=v('wg')==='f'?'her':'him';const poss=P==='He'?'His':'Her';
+const r=v('wr_r');const age=parseInt(v('wa'))||'';const ageTxt=age?`${P} is ${W[age]||age} years old.`:'';
+const s=[`My ${r}'s name is ${v('wn')||'___'}.`,ageTxt,`${P} has got ${v('wh')} hair.`,`${P} is ${v('wp1')} and ${v('wp2')}.`,v('wh2')?`${P} likes ${v('wh2')}.`:'',v('wab')?`${P} is good at ${v('wab')}.`:'',v('wrs')?`I love ${obj} because ${v('wrs')}.`:''].filter(Boolean);
+$('para').value=s.join(' ');S.para=$('para').value;save();dash()}
+
+function chk(){const t=$('para').value.trim();const s=t.split(/[.!?]+/).map(x=>x.trim()).filter(Boolean);
+const ok=c=>c?'✔':'✘';
+$('chk').innerHTML=[`Sentences: ${s.length} (target 6–8) ${ok(s.length>=6&&s.length<=8)}`,`Every sentence starts with a capital letter ${ok(s.length>0&&s.every(x=>/^[A-Z]/.test(x)))}`,`Paragraph ends with punctuation ${ok(/[.!?]$/.test(t))}`,`Includes a hobby sentence ${ok(/like|enjoy/.test(t))}`,`Includes good at / great at / terrible at ${ok(/good at|great at|terrible at/.test(t))}`,'<span class="small">Content, vocabulary, organisation and quality are subjective; the teacher confirms the marks.</span>'].join('<br>');
+S.wstat='Checked';save();dash()}
+
+function showFinal(){$('qz-final').innerHTML=quiz('*');window.scrollTo(0,0)}
+
+function finalRes(){const all=idx('*');const a=all.filter(i=>S.res[i]!=null).length;
+if(a<all.length){$('fr').innerHTML=`<div class="card">Answer all ${all.length} questions to see your final result. Answered so far: ${a}.</div>`;$('cert').innerHTML='';return}
+const c=all.filter(i=>S.res[i]===1).length,pct=Math.round(c/all.length*100);
+const mods=Object.keys(MODS).map(m=>{const ix=idx(m);return [MODS[m][0],Math.round(ix.filter(i=>S.res[i]===1).length/ix.length*100)]});
+const strong=mods.filter(x=>x[1]>=80).map(x=>x[0]),weak=mods.filter(x=>x[1]<60).map(x=>x[0]);
+$('fr').innerHTML=`<div class="card"><p><b>Marks earned:</b> ${c} / ${all.length} · <b>Percentage:</b> ${pct}%</p>
+<p><b>Strengths (80%+):</b> ${strong.join(', ')||'Keep practising; no module has reached 80% yet.'}</p>
+<p><b>Areas for improvement (below 60%):</b> ${weak.join(', ')||'None.'}</p>
+<p><b>Recommended activities:</b> Revisit the modules named above and use Review mistakes on the Dashboard.</p></div>`;
+$('cert').innerHTML=`<div class="cert"><h3>Certificate of Practice</h3><p>This certifies that <b>${S.name||'Student'}</b></p><p>has completed <b>Describing People – Final Test</b></p><p>Date: ${new Date().toLocaleDateString('en-GB')} · Score: ${c}/${all.length} (${pct}%)</p><p class="small">Generated by this practice application. It is not an official Ministry of Education certificate.</p></div>`}
+
+function teach(){const rows=Object.keys(MODS).map(m=>{const ix=idx(m);const a=ix.filter(i=>S.res[i]!=null).length;const c=ix.filter(i=>S.res[i]===1).length;
+return `<tr><td>${MODS[m][0]}</td><td>${a}/${ix.length}</td><td>${a?Math.round(c/ix.length*100):0}%</td></tr>`}).join('');
+$('tc').innerHTML=`<table border="1" cellpadding="6" style="border-collapse:collapse;width:100%"><tr><th>Module</th><th>Answered</th><th>Correct (of all items)</th></tr>${rows}</table>
+<p class="small">Writing: ${S.wstat==='Checked'?'draft checked; teacher marks the rubric':'not checked yet'}. Student: ${S.name||'(not entered)'}</p>`;
+const w=idx('*').filter(i=>S.res[i]===0).map(i=>`<li>${BANK[i][2]} — ${BANK[i][5]}</li>`).join('');
+$('cm').innerHTML=w?'<ul>'+w+'</ul>':'<p>No mistakes saved yet.</p>'}
+
+function exportJ(){const blob=new Blob([JSON.stringify({student:S.name,res:S.res,writing:S.para,exported:new Date().toISOString()},null,2)],{type:'application/json'});
+const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='describing-people-results.json';a.click()}
+
+/* ===== Read, Listen and Repeat ===== */
+const TTS={ok:('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window),voice:null};
+function pickVoice(){if(!TTS.ok)return;const vs=speechSynthesis.getVoices();
+TTS.voice=vs.find(v=>/en-GB/i.test(v.lang)&&/Daniel|Kate|Serena|Stephanie/i.test(v.name))||vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null}
+if(TTS.ok){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+const NOSND='Sound is not supported in this browser or device. You can read the words and sentences aloud yourself.';
+const RW=[
+['Personality','shy','shy'],['Personality','confident','con-fi-dent'],['Personality','lazy','la-zy'],['Personality','hard-working','hard-work-ing'],['Personality','friendly','friend-ly'],['Personality','unfriendly','un-friend-ly'],['Personality','kind','kind'],['Personality','mean','mean'],['Personality','polite','po-lite'],['Personality','rude','rude'],['Personality','tidy','ti-dy'],['Personality','untidy','un-ti-dy'],
+['Action','count','count'],['Action','spell','spell'],['Action','do experiments','do / ex-per-i-ments'],['Action','bake a cake','bake / a / cake'],['Action','throw a ball','throw / a / ball'],['Action','fix toys','fix / toys'],['Action','juggle','jug-gle'],['Action','make a pizza','make / a / piz-za'],
+['Hobby','playing football','play-ing / foot-ball'],['Hobby','baking cakes','bak-ing / cakes'],['Hobby','fixing toys','fix-ing / toys'],['Hobby','juggling','jug-gling'],['Hobby','doing experiments','do-ing / ex-per-i-ments'],['Hobby','making pizzas','mak-ing / piz-zas'],
+['Ability','spelling difficult words','spel-ling / dif-fi-cult / words'],['Ability','counting quickly','count-ing / quick-ly'],['Ability','good at','good / at'],['Ability','great at','great / at'],['Ability','terrible at','ter-ri-ble / at']];
+const SENT=["He has got short, dark hair.","She has got long, straight hair.","He is friendly and hard-working.","She is kind and polite.","My brother is tidy, but my sister is untidy.","I don't like juggling.","She doesn't like doing experiments.","I am good at spelling difficult words.","He is terrible at juggling.","Ali is good at counting quickly.","Every Friday, I play football."];
+const STORY=["Ali is eleven years old.","He has got short, dark hair.","He is friendly and hard-working.","Every Friday, he plays football with his friends.","Today, his sister Sara is baking a cake in the kitchen.","Ali is good at counting quickly, so he counts the cakes for the party.","Suddenly, a football is rolling into the kitchen.","Ali says sorry politely, and Sara smiles because he is kind.","Together, they fix a broken toy in the living room, and the story ends happily."];
+const CQ=[
+["How old is Ali?",["ten","eleven","twelve"],1],
+["What is Sara doing in the kitchen?",["fixing toys","baking a cake","juggling"],1],
+["What does Ali do every Friday?",["bakes cakes","plays football","counts cakes"],1],
+["Why does Sara smile?",["because he is tall","because he is untidy","because he is kind"],2],
+["What is Ali good at?",["juggling","counting quickly","spelling"],1],
+["What do they fix together?",["a window","a bicycle","a broken toy"],2]];
+const POS=['Well done! Keep going.','Excellent effort! Listen and repeat as many times as you like.','Great work! Practice makes progress.'];
+
+function RD(){if(!S.rd)S.rd={w:[],s:[],cq:{},story:false};return S.rd}
+function rdSave(){save();rpDash()}
+function msg(t){const m=$('rdmsg');m.style.display='block';m.textContent=t}
+function mk(t){const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=0.85;if(TTS.voice)u.voice=TTS.voice;return u}
+let storyRun=0,hlTok=0;
+function hlOne(i){document.querySelectorAll('.stl').forEach(e=>e.classList.remove('hl'));if(i>=0&&$('sv'+i))$('sv'+i).classList.add('hl')}
+function stopAudio(){storyRun++;hlTok++;if(TTS.ok)speechSynthesis.cancel();hlOne(-1)}
+function speakTracked(t,i,then){const tok=++hlTok;const u=mk(t);
+u.onend=u.onerror=()=>{if(tok!==hlTok)return;if(then)then();else hlOne(-1)};hlOne(i);speechSynthesis.speak(u)}
+function say(t){if(!TTS.ok){alert(NOSND);return}stopAudio();speechSynthesis.speak(mk(t))}
+function sayW(i){say(RW[i][1])}
+function sayS(i){say(SENT[i])}
+function sayT(i){if(!TTS.ok){alert(NOSND);return}stopAudio();speakTracked(STORY[i],i)}
+function playStory(){if(!TTS.ok){alert(NOSND);return}stopAudio();const run=storyRun;let i=0;
+const step=()=>{if(run!==storyRun)return;
+if(i>=STORY.length){hlOne(-1);RD().story=true;rdSave();msg('You listened to the whole story. Now answer the questions below.');return}
+speakTracked(STORY[i],i,()=>{i++;step()})};
+step()}
+function tog(arr,i){const a=RD()[arr];const k=a.indexOf(i);
+if(k>=0)a.splice(k,1);else{a.push(i);msg(POS[Math.floor(Math.random()*POS.length)])}
+rdSave();rdRender()}
+function cqAns(i,k){const ok=k===CQ[i][2];RD().cq[i]=ok?1:0;rdSave();
+$('cqf'+i).innerHTML=ok?'<span class="good">✔ Well done! That is correct.</span>':'<span class="wrong">Not quite – that is okay.</span> Listen to the story again and try once more. Correct answer: <b>'+CQ[i][1][CQ[i][2]]+'</b>.'}
+function rdRender(){const r=RD();
+$('rd1').innerHTML=RW.map((x,i)=>`<div class="row"><span class="w" onclick="sayW(${i})">${x[1]}</span><span class="syl">${x[0]} · ${x[2]}</span><button class="spk" onclick="sayW(${i})">🔊 Listen</button><button class="alt" onclick="tog('w',${i})">${r.w.includes(i)?'✔ I said it':'I said it'}</button></div>`).join('');
+$('rd2').innerHTML=SENT.map((s,i)=>`<div class="row"><span style="flex:1;min-width:200px">${s}</span><button class="spk" onclick="sayS(${i})">🔊 Listen</button><button class="alt" onclick="tog('s',${i})">${r.s.includes(i)?'✔ I read it aloud':'I read it aloud'}</button></div>`).join('');
+$('rd3s').innerHTML=STORY.map((s,i)=>`<div class="row stl" id="sv${i}"><span style="flex:1;min-width:200px">${s}</span><button class="spk" onclick="sayT(${i})">🔊 Listen</button></div>`).join('');
+$('rd3q').innerHTML=CQ.map((c,i)=>`<div class="card"><div class="q">${i+1}. ${c[0]}</div>${c[1].map((o,k)=>`<label class="opt"><input type="radio" name="cq${i}" ${r.cq[i]!=null?'':''} onchange="cqAns(${i},${k})">${o}</label>`).join('')}<div class="fb" id="cqf${i}">${r.cq[i]===1?'<span class="good">✔ Correct – you can try again any time.</span>':r.cq[i]===0?'<span class="wrong">Not quite – try again.</span>':''}</div></div>`).join('')}
+function rpDash(){const el=$('rp');if(!el)return;const r=RD();
+const cqOK=Object.values(r.cq).filter(v=>v===1).length;
+const fin=[RW.length===r.w.length,SENT.length===r.s.length,r.story&&cqOK===CQ.length].filter(Boolean).length;
+el.innerHTML=`<div class="grid" style="margin-top:10px"><div class="tile"><b>Words practised</b>${r.w.length} of ${RW.length} (self-marked)</div><div class="tile"><b>Sentences completed</b>${r.s.length} of ${SENT.length} (self-marked)</div><div class="tile"><b>Comprehension answered correctly</b>${cqOK} of ${CQ.length}</div><div class="tile"><b>Story listened to in full</b>${r.story?'Yes':'Not yet'}</div><div class="tile"><b>Reading activities finished</b>${fin} of 3</div></div>`}
+function decorate(){document.querySelectorAll('#p-vocab .tile b').forEach(b=>{if(b.dataset.s)return;b.dataset.s=1;const t=b.textContent.trim();
+const btn=document.createElement('button');btn.className='spk';btn.textContent='🔊';btn.setAttribute('aria-label','Listen to '+t);btn.onclick=e=>{e.stopPropagation();say(t)};
+b.onclick=()=>say(t);b.style.cursor='pointer';b.appendChild(btn)})}
+
+initNav();vcards();decorate();renderAll();rdRender();dash();
+document.querySelectorAll('input[type=radio]').forEach(()=>{});
+$('para').value=S.para||'';
+if(S.name)$('sn').value=S.name;
+go('d');
+</script>
+</body>
+</html>
